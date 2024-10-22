@@ -12,7 +12,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/boats" element={<Boats />} />
         <Route path="/assignment" element={<Assignment />} /> {/* New route for Assignment */}

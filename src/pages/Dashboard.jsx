@@ -62,7 +62,7 @@ export default function Dashboard() {
                   {[13, 10, 15, 11, 14].map((count, index) => (
                     <div key={index} className="text-center">
                       <img
-                        src="/assets/cl.png"
+                        src="./assets/cl.png"
                         alt="Company Avatar"
                         className="h-16 w-16 rounded-full mx-auto"
                       />
@@ -76,7 +76,7 @@ export default function Dashboard() {
                   {[7, 9, 12, 8, 6].map((count, index) => (
                     <div key={index} className="text-center">
                       <img
-                        src="/assets/cl.png"
+                        src="./assets/cl.png"
                         alt="Company Avatar"
                         className="h-16 w-16 rounded-full mx-auto"
                       />
@@ -91,7 +91,7 @@ export default function Dashboard() {
               <div className="bg-white p-6 rounded-lg shadow">
                 <h2 className="text-lg font-semibold mb-8">Bookings by Feeder</h2>
                 <div className="flex justify-center">
-                  <img src="/assets/pie.png" alt="Bookings by Feeder Chart" />
+                  <img src="./assets/pie.png" alt="Bookings by Feeder Chart" />
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Dashboard() {
           <section className="my-10 bg-white p-6 rounded-lg shadow">
             <h2 className="text-lg font-semibold mb-8">Bookings Trend</h2>
             <div className="flex justify-center">
-              <img src="/assets/chart.png" alt="Bookings Trend Chart" />
+              <img src="./assets/chart.png" alt="Bookings Trend Chart" />
             </div>
           </section>
         </div>
