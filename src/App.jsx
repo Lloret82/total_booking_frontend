@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Assignment from "./pages/Assignment";
@@ -7,9 +7,8 @@ import Boats from "./pages/Boats";
 
 function App() {
   return (
-    <Router basename="/total_booking_frontend">
+    <Router>
       <Routes>
-        {/* Redirect the root path to the Dashboard */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/bookings" element={<Bookings />} />
