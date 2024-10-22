@@ -8,7 +8,7 @@ module.exports = {
     },
   },
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // make sure your content path is correct
+    "./src/**/*.{js,jsx,ts,tsx}", 
   ],
   plugins: [],
 };

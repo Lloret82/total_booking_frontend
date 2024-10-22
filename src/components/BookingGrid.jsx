@@ -5,7 +5,6 @@ const BookingGrid = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    // Fetching dummy data
     setBookings(dummyBookings);
   }, []);
 
