@@ -1,24 +1,21 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Bookings from './pages/Bookings';
-import Boats from './pages/Boats';
-import Dashboard from './pages/Dashboard';
-import Assignment from './pages/Assignment'; // Import Assignment component
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Bookings from "./pages/Bookings";
+import Assignment from "./pages/Assignment";
+import Boats from "./pages/Boats";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
+    <Router basename="/total_booking_frontend">
       <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/bookings" element={<Bookings />} />
-        <Route path="/boats" element={<Boats />} />
-        <Route path="/assignment" element={<Assignment />} /> {/* New route for Assignment */}
+        {/* Redirect the root path to the Dashboard */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/bookings" element={<Bookings />} />
+        <Route path="/assignment" element={<Assignment />} />
+        <Route path="/boats" element={<Boats />} />
       </Routes>
-      <Footer />
     </Router>
   );
 }
