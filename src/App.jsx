@@ -8,8 +8,7 @@ import Boats from "./pages/Boats";
 
 function App() {
   return (
-    <Router>
-      {/* Render the Navbar at the top */}
+    <Router key={window.location.pathname}>
       <Navbar />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -21,5 +20,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
