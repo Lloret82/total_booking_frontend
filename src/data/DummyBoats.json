@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "name": "Sea Explorer",
+      "type": "Yacht",
+      "capacity": 10,
+      "location": "Miami, FL"
+    },
+    {
+      "id": 2,
+      "name": "Wave Rider",
+      "type": "Speedboat",
+      "capacity": 6,
+      "location": "Key West, FL"
+    },
+    {
+      "id": 3,
+      "name": "Ocean Breeze",
+      "type": "Catamaran",
+      "capacity": 15,
+      "location": "Fort Lauderdale, FL"
+    }
+  ]
+  

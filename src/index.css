@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.droppable {
+  min-height: 200px; /* Ensure droppable areas have some height */
+}
+.draggable {
+  cursor: grab;
+}

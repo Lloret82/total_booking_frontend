@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "boatName": "Sea Explorer",
+      "date": "2024-10-25",
+      "customerName": "John Doe",
+      "tourName": "Sunset Tour",
+      "departureDate": "2024-10-25",
+      "isAssigned": false,
+      "points" : "0.8"
+    },
+    {
+      "id": 2,
+      "boatName": "Wave Rider",
+      "date": "2024-11-05",
+      "customerName": "Jane Smith",
+      "tourName": "Island Hopping",
+      "departureDate": "2024-11-05",
+      "isAssigned": false,
+      "points" : "0.8"
+    },
+    {
+      "id": 3,
+      "boatName": "Ocean Breeze",
+      "date": "2024-11-15",
+      "customerName": "Michael Brown",
+      "tourName": "Deep Sea Adventure",
+      "departureDate": "2024-11-15",
+      "isAssigned": false,
+      "points" : "0.8"
+    }
+  ]
+  
