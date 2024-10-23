@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
+const getRandomStatus = () => {
+  const statuses = ["To Assign", "Pending", "Confirmed"];
+  return statuses[Math.floor(Math.random() * statuses.length)];
+};
+
+const getRandomDate = () => {
+  const start = new Date(2024, 0, 1);
+  const end = new Date(2025, 11, 31);
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return randomDate.toISOString().split('T')[0];
+};
+
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
 
@@ -33,22 +45,24 @@ const Bookings = () => {
   const handleAddBooking = () => {
     const newBooking = {
       id: bookings.length + 1,
-      boatName: `New Booking ${bookings.length + 1}`,
-      date: "12/08/2025",
+      boatName: `Private Tour`,
+      date: getRandomDate(),
       customerName: "John Smith",
       tourName: "Private Tour",
-      departureDate: "12/08/2025",
+      departureDate: getRandomDate(),
       duration: "4 hours",
       capacity: "25",
       location: "Harbor D",
       price: "$180",
-      status: "To Assign",
-      logo: "./assets/512x512-2.avif"
+      status: getRandomStatus(),
+      logo: "./assets/512x512-2.avif",
+      isAssigned: false
     };
 
     const updatedBookings = [...bookings, newBooking];
     setBookings(updatedBookings);
     saveToLocalStorage('bookings', updatedBookings);
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (
@@ -64,10 +78,9 @@ const Bookings = () => {
           </button>
         </section>
 
-        {/* Header Row - Hidden on small screens */}
         <div className="hidden md:block bg-white p-4 rounded-lg shadow mb-2">
           <div className="grid grid-cols-10 items-center gap-4 font-semibold text-gray-700 pl-8">
-            <p></p> {/* Placeholder for image */}
+            <p></p>
             <p>Tour Name</p>
             <p>Customer</p>
             <p>Date</p>
@@ -76,34 +89,29 @@ const Bookings = () => {
             <p>Location</p>
             <p>Price</p>
             <p>Status</p>
-            <p></p> {/* Placeholder for button */}
+            <p></p>
           </div>
         </div>
 
-        {/* Bookings List */}
         <div className="bg-white p-6 rounded-lg shadow">
           <ul className="divide-y divide-gray-200">
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="md:grid md:grid-cols-10 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md bg-white mb-6 flex flex-col md:flex-row"
+                className={`md:grid md:grid-cols-10 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md mb-6 flex flex-col md:flex-row ${booking.status === 'Assigned' ? 'bg-green-100' : 'bg-white'}`}
               >
-                {/* Booking Details */}
                 <div className="flex justify-center mb-2 md:mb-0">
                   <img src={booking.logo} alt="Boat Logo" className="h-12 w-12 rounded-full" />
                 </div>
                 <div className="text-center md:text-left mb-2 md:mb-0">
                   <h3 className="font-semibold text-gray-700">{booking.tourName}</h3>
                 </div>
-                {/* Conditionally render these on mobile */}
                 <div className="text-center md:hidden">
                   <p className="text-gray-600">{booking.departureDate}</p>
                 </div>
                 <div className="text-center md:hidden">
                   <p className="text-gray-600">{booking.customerName}</p>
                 </div>
-
-                {/* Desktop view columns */}
                 <div className="hidden md:block text-center">
                   <p className="text-gray-600">{booking.customerName}</p>
                 </div>
@@ -123,10 +131,9 @@ const Bookings = () => {
                   <p className="text-gray-600">{booking.price}</p>
                 </div>
                 <div className="hidden md:block text-center">
-                  <p className={`font-semibold ${booking.status === 'Confirmed' ? 'text-green-600' : booking.status === 'Cancelled' ? 'text-red-600' : 'text-yellow-600'}`}>{booking.status}</p>
+                  <p className={`font-semibold ${booking.status === 'Assigned' ? 'text-green-600' : 'text-yellow-600'}`}>{booking.status}</p>
                 </div>
 
-                {/* View Details Button */}
                 <div className="ml-4 flex justify-center md:justify-end">
                   <button className="bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition whitespace-nowrap">
                     View Details

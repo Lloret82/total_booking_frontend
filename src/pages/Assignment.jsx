@@ -1,57 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import DraggableBooking from '../components/DraggableBooking';
+import DroppableBoat from '../components/DroppableBoat';
 import dummyBookings from '../data/dummyBookings.json';
 import dummyBoats from '../data/dummyBoats.json';
 
-const DraggableBooking = ({ booking, isAssigned, sourceBoatId }) => {
-  const [{ isDragging }, drag] = useDrag({
-    type: 'BOOKING',
-    item: { id: booking.id, isAssigned, sourceBoatId },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  return (
-    <div
-      ref={drag}
-      className={`bg-white p-4 rounded shadow-md mb-2 ${isDragging ? 'opacity-50' : ''} ${isAssigned ? 'bg-gray-200' : ''}`}
-    >
-      <h3 className="font-bold text-lg">{booking.boatName}</h3>
-      <p>Customer: {booking.customerName}</p>
-      <p>Tour: {booking.tourName}</p>
-      <p>Date: {booking.departureDate}</p>
-      <p>Points: {booking.points}</p>
-    </div>
-  );
-};
-
-const DroppableBoat = ({ boat, onDropBooking }) => {
-  const [{ isOver }, drop] = useDrop({
-    accept: 'BOOKING',
-    drop: (item) => onDropBooking(item.id, boat.id, true, item.sourceBoatId),
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-  });
-
-  return (
-    <div
-      ref={drop}
-      className={`bg-blue-100 p-4 rounded shadow-md ${isOver ? 'bg-blue-200' : ''}`}
-    >
-      <h2 className="text-xl font-bold mb-4">{boat.name}</h2>
-      <p>Type: {boat.type}</p>
-      <p>Capacity: {boat.capacity}</p>
-      <p>Location: {boat.location}</p>
-      <h3 className="font-bold mt-4">Assigned Bookings:</h3>
-      {boat.assignedBookings.map((booking) => (
-        <DraggableBooking key={booking.id} booking={booking} isAssigned={true} sourceBoatId={boat.id} />
-      ))}
-    </div>
-  );
-};
 
 const Assignment = () => {
   const [bookings, setBookings] = useState([]);
@@ -75,12 +29,15 @@ const Assignment = () => {
 
   const handleDropBooking = (bookingId, boatId, isAssigning, sourceBoatId = null) => {
     const draggedBooking = bookings.find((booking) => booking.id === bookingId) ||
-                           boats.flatMap(boat => boat.assignedBookings).find(booking => booking.id === bookingId);
+      boats.flatMap(boat => boat.assignedBookings).find(booking => booking.id === bookingId);
 
     if (isAssigning) {
       if (draggedBooking && !draggedBooking.isAssigned) {
         draggedBooking.isAssigned = true;
-        const updatedBookings = bookings.filter((booking) => booking.id !== bookingId);
+        draggedBooking.status = "Assigned";
+        const updatedBookings = bookings.map((booking) =>
+          booking.id === bookingId ? draggedBooking : booking
+        );
         const updatedBoats = boats.map((boat) => {
           if (boat.id === boatId) {
             return {
@@ -97,28 +54,30 @@ const Assignment = () => {
         saveToLocalStorage('boats', updatedBoats);
       }
     } else {
-      let updatedBoats = boats;
-      if (sourceBoatId) {
-        updatedBoats = boats.map((boat) => ({
+      if (draggedBooking && draggedBooking.isAssigned) {
+        draggedBooking.isAssigned = false;
+        draggedBooking.status = "To Assign";
+        const updatedBookings = bookings.map((booking) =>
+          booking.id === bookingId ? draggedBooking : booking
+        );
+        const updatedBoats = boats.map((boat) => ({
           ...boat,
           assignedBookings: boat.id === sourceBoatId
             ? boat.assignedBookings.filter((booking) => booking.id !== bookingId)
             : boat.assignedBookings,
         }));
-      }
 
-      draggedBooking.isAssigned = false;
-      const updatedBookings = [...bookings, draggedBooking];
-      setBookings(updatedBookings);
-      setBoats(updatedBoats);
-      saveToLocalStorage('bookings', updatedBookings);
-      saveToLocalStorage('boats', updatedBoats);
+        setBookings(updatedBookings);
+        setBoats(updatedBoats);
+        saveToLocalStorage('bookings', updatedBookings);
+        saveToLocalStorage('boats', updatedBoats);
+      }
     }
   };
 
   const filteredBookings = bookings.filter((booking) => {
-    if (!filterDate) return true;
-    return booking.departureDate === filterDate;
+    if (!filterDate) return !booking.isAssigned;
+    return booking.departureDate === filterDate && !booking.isAssigned;
   });
 
   const DroppableBookings = () => {
@@ -133,7 +92,7 @@ const Assignment = () => {
     return (
       <div
         ref={drop}
-        className={`bg-gray-100 p-4 rounded shadow-md ${isOver ? 'bg-gray-200' : ''}`}
+        className={`bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition-all ${isOver ? 'bg-gray-200' : ''}`}
       >
         <h2 className="text-xl font-bold mb-4">Bookings</h2>
         <input
@@ -152,7 +111,7 @@ const Assignment = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="container mx-auto p-6 grid grid-cols-2 gap-6">
+      <div className="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <DroppableBookings />
         <div className="grid grid-cols-1 gap-4">
           {boats.map((boat) => (
