@@ -15,11 +15,11 @@ const Bookings = () => {
         isAssigned: false,
         points: "0.8",
         duration: "3 hours",
-        capacity: "30 people",
+        capacity: "30",
         location: "Harbor A",
         price: "$2000",
         status: "Confirmed",
-        logo: "./assets/cl.png"
+        logo: "./assets/512x512-2.avif"
       }
     ];
 
@@ -33,17 +33,17 @@ const Bookings = () => {
   const handleAddBooking = () => {
     const newBooking = {
       id: bookings.length + 1,
-      boatName: `New Boat Booking ${bookings.length + 1}`,
+      boatName: `New Booking ${bookings.length + 1}`,
       date: "12/08/2025",
       customerName: "John Smith",
-      tourName: "New Tour",
+      tourName: "Private Tour",
       departureDate: "12/08/2025",
       duration: "4 hours",
-      capacity: "25 people",
+      capacity: "25",
       location: "Harbor D",
       price: "$180",
       status: "To Assign",
-      logo: "./assets/cl.png"
+      logo: "./assets/512x512-2.avif"
     };
 
     const updatedBookings = [...bookings, newBooking];
@@ -72,7 +72,7 @@ const Bookings = () => {
             <p>Customer</p>
             <p>Date</p>
             <p>Duration</p>
-            <p>Capacity</p>
+            <p>N. People</p>
             <p>Location</p>
             <p>Price</p>
             <p>Status</p>
