@@ -7,7 +7,13 @@
       "tourName": "Sunset Tour",
       "departureDate": "2024-10-25",
       "isAssigned": false,
-      "points" : "0.8"
+      "points": "0.8",
+      "duration": "3 hours",
+      "capacity": "30 people",
+      "location": "Harbor A",
+      "price": "$150",
+      "guideName": "Captain Jack",
+      "status": "Confirmed"
     },
     {
       "id": 2,
@@ -17,7 +23,13 @@
       "tourName": "Island Hopping",
       "departureDate": "2024-11-05",
       "isAssigned": false,
-      "points" : "0.8"
+      "points": "0.8",
+      "duration": "5 hours",
+      "capacity": "20 people",
+      "location": "Harbor B",
+      "price": "$200",
+      "guideName": "Captain Ron",
+      "status": "Pending"
     },
     {
       "id": 3,
@@ -27,7 +39,13 @@
       "tourName": "Deep Sea Adventure",
       "departureDate": "2024-11-15",
       "isAssigned": false,
-      "points" : "0.8"
+      "points": "0.8",
+      "duration": "8 hours",
+      "capacity": "15 people",
+      "location": "Harbor C",
+      "price": "$300",
+      "guideName": "Captain Smith",
+      "status": "Cancelled"
     }
   ]
   

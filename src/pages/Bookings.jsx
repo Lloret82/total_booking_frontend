@@ -12,25 +12,14 @@ const Bookings = () => {
         customerName: "John Doe",
         tourName: "Sunset Tour",
         departureDate: "2024-10-25",
-        isAssigned: false
-      },
-      {
-        id: 2,
-        boatName: "Wave Rider",
-        date: "2024-11-05",
-        customerName: "Jane Smith",
-        tourName: "Island Hopping",
-        departureDate: "2024-11-05",
-        isAssigned: false
-      },
-      {
-        id: 3,
-        boatName: "Ocean Breeze",
-        date: "2024-11-15",
-        customerName: "Michael Brown",
-        tourName: "Deep Sea Adventure",
-        departureDate: "2024-11-15",
-        isAssigned: false
+        isAssigned: false,
+        points: "0.8",
+        duration: "3 hours",
+        capacity: "30 people",
+        location: "Harbor A",
+        price: "$2000",
+        status: "Confirmed",
+        logo: "./assets/cl.png"
       }
     ];
 
@@ -45,11 +34,16 @@ const Bookings = () => {
     const newBooking = {
       id: bookings.length + 1,
       boatName: `New Boat Booking ${bookings.length + 1}`,
-      date: "2024-12-01",
-      customerName: "New Customer",
+      date: "12/08/2025",
+      customerName: "John Smith",
       tourName: "New Tour",
-      departureDate: "2024-12-01",
-      isAssigned: false
+      departureDate: "12/08/2025",
+      duration: "4 hours",
+      capacity: "25 people",
+      location: "Harbor D",
+      price: "$180",
+      status: "To Assign",
+      logo: "./assets/cl.png"
     };
 
     const updatedBookings = [...bookings, newBooking];
@@ -58,28 +52,81 @@ const Bookings = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Bookings</h1>
-      <button
-        onClick={handleAddBooking}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-6"
-      >
-        Add Booking
-      </button>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {bookings.map((booking) => (
-          <div
-            key={booking.id}
-            className={`bg-white shadow-md rounded p-4 ${booking.isAssigned ? 'border-red-500 border-2' : ''}`}
+    <div className="bg-gray-50 min-h-screen py-8">
+      <div className="container mx-auto px-6 lg:px-8">
+        <section>
+          <h1 className="text-2xl font-bold mb-8">Bookings</h1>
+          <button
+            onClick={handleAddBooking}
+            className="bg-customDarkBlue text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition mb-8"
           >
-            <h3 className="font-bold text-lg">{booking.boatName}</h3>
-            <p>Customer: {booking.customerName}</p>
-            <p>Tour: {booking.tourName}</p>
-            <p>Date: {booking.departureDate}</p>
-            <p>Points: {booking.points}</p>
+            Add Booking
+          </button>
+        </section>
+
+        {/* Header Row */}
+        <div className="bg-white p-4 rounded-lg shadow mb-2">
+          <div className="grid grid-cols-10 items-center gap-4 font-semibold text-gray-700 pl-16">
+            <p></p> {/* Placeholder for image */}
+            <p>Tour Name</p>
+            <p>Customer</p>
+            <p>Date</p>
+            <p>Duration</p>
+            <p>Capacity</p>
+            <p>Location</p>
+            <p>Price</p>
+            <p>Status</p>
+            <p></p> {/* Placeholder for button */}
           </div>
-        ))}
+        </div>
+
+        {/* Bookings List */}
+        <div className="bg-white p-6 rounded-lg shadow">
+          <ul className="divide-y divide-gray-200">
+            {bookings.map((booking) => (
+              <li
+                key={booking.id}
+                className="grid grid-cols-10 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md bg-white mb-6"
+              >
+                {/* Booking Details */}
+                <div className="flex justify-center">
+                  <img src={booking.logo} alt="Boat Logo" className="h-12 w-12 rounded-full" />
+                </div>
+                <div className="text-center">
+                  <h3 className="font-semibold text-gray-700">{booking.tourName}</h3>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.customerName}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.departureDate}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.duration}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.capacity}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.location}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-gray-600">{booking.price}</p>
+                </div>
+                <div className="text-center">
+                  <p className={`font-semibold ${booking.status === 'Confirmed' ? 'text-green-600' : booking.status === 'Cancelled' ? 'text-red-600' : 'text-yellow-600'}`}>{booking.status}</p>
+                </div>
+
+                {/* View Details Button */}
+                <div className="ml-4 flex justify-center">
+                  <button className="bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition whitespace-nowrap">
+                    View Details
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
