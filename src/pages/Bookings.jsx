@@ -17,7 +17,7 @@ const Bookings = () => {
         duration: "3 hours",
         capacity: "30 people",
         location: "Harbor A",
-        price: "$2000",
+        price: "$150",
         status: "Confirmed",
         logo: "./assets/cl.png"
       }
@@ -34,15 +34,15 @@ const Bookings = () => {
     const newBooking = {
       id: bookings.length + 1,
       boatName: `New Boat Booking ${bookings.length + 1}`,
-      date: "12/08/2025",
-      customerName: "John Smith",
+      date: "2024-12-01",
+      customerName: "New Customer",
       tourName: "New Tour",
-      departureDate: "12/08/2025",
+      departureDate: "2024-12-01",
       duration: "4 hours",
       capacity: "25 people",
       location: "Harbor D",
       price: "$180",
-      status: "To Assign",
+      status: "Confirmed",
       logo: "./assets/cl.png"
     };
 
@@ -64,8 +64,8 @@ const Bookings = () => {
           </button>
         </section>
 
-        {/* Header Row */}
-        <div className="bg-white p-4 rounded-lg shadow mb-2">
+        {/* Header Row - Only visible on larger screens */}
+        <div className="hidden md:grid bg-white p-4 rounded-lg shadow mb-2">
           <div className="grid grid-cols-10 items-center gap-4 font-semibold text-gray-700 pl-16">
             <p></p> {/* Placeholder for image */}
             <p>Tour Name</p>
@@ -86,7 +86,7 @@ const Bookings = () => {
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="grid grid-cols-10 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md bg-white mb-6"
+                className="grid md:grid-cols-10 sm:grid-cols-5 grid-cols-1 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md bg-white mb-6"
               >
                 {/* Booking Details */}
                 <div className="flex justify-center">
@@ -95,22 +95,22 @@ const Bookings = () => {
                 <div className="text-center">
                   <h3 className="font-semibold text-gray-700">{booking.tourName}</h3>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden sm:block">
                   <p className="text-gray-600">{booking.customerName}</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden sm:block">
                   <p className="text-gray-600">{booking.departureDate}</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden md:block">
                   <p className="text-gray-600">{booking.duration}</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden md:block">
                   <p className="text-gray-600">{booking.capacity}</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden lg:block">
                   <p className="text-gray-600">{booking.location}</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center hidden lg:block">
                   <p className="text-gray-600">{booking.price}</p>
                 </div>
                 <div className="text-center">
