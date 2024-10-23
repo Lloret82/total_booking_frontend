@@ -64,22 +64,21 @@ const Bookings = () => {
           </button>
         </section>
 
-       {/* Header Row - Hidden on small screens */}
-<div className="hidden md:block bg-white p-4 rounded-lg shadow mb-2">
-  <div className="grid grid-cols-10 items-center gap-4 font-semibold text-gray-700 pl-8"> {/* Adjusted padding */}
-    <p></p> {/* Placeholder for image */}
-    <p>Tour Name</p>
-    <p>Customer</p>
-    <p>Date</p>
-    <p>Duration</p>
-    <p>Capacity</p>
-    <p>Location</p>
-    <p>Price</p>
-    <p>Status</p>
-    <p></p> {/* Placeholder for button */}
-  </div>
-</div>
-
+        {/* Header Row - Hidden on small screens */}
+        <div className="hidden md:block bg-white p-4 rounded-lg shadow mb-2">
+          <div className="grid grid-cols-10 items-center gap-4 font-semibold text-gray-700 pl-8">
+            <p></p> {/* Placeholder for image */}
+            <p>Tour Name</p>
+            <p>Customer</p>
+            <p>Date</p>
+            <p>Duration</p>
+            <p>Capacity</p>
+            <p>Location</p>
+            <p>Price</p>
+            <p>Status</p>
+            <p></p> {/* Placeholder for button */}
+          </div>
+        </div>
 
         {/* Bookings List */}
         <div className="bg-white p-6 rounded-lg shadow">
@@ -87,35 +86,24 @@ const Bookings = () => {
             {bookings.map((booking) => (
               <li
                 key={booking.id}
-                className="md:grid md:grid-cols-10 md:items-center md:py-4 md:rounded-lg hover:bg-gray-100 transition bg-white mb-6"
+                className="md:grid md:grid-cols-10 items-center py-4 hover:bg-gray-100 transition rounded-lg shadow-md bg-white mb-6 flex flex-col md:flex-row"
               >
-                {/* Mobile Card Layout */}
-                <div className="block md:hidden bg-gray-50 p-4 rounded-lg shadow mb-4">
-                  <div className="flex items-center mb-2">
-                    <img src={booking.logo} alt="Boat Logo" className="h-12 w-12 rounded-full mr-4" />
-                    <div>
-                      <h3 className="font-semibold text-gray-700">{booking.tourName}</h3>
-                      <p className="text-gray-600">{booking.customerName}</p>
-                    </div>
-                  </div>
-                  <p><strong>Date:</strong> {booking.departureDate}</p>
-                  <p><strong>Duration:</strong> {booking.duration}</p>
-                  <p><strong>Capacity:</strong> {booking.capacity}</p>
-                  <p><strong>Location:</strong> {booking.location}</p>
-                  <p><strong>Price:</strong> {booking.price}</p>
-                  <p className={`font-semibold ${booking.status === 'Confirmed' ? 'text-green-600' : booking.status === 'Cancelled' ? 'text-red-600' : 'text-yellow-600'}`}>{booking.status}</p>
-                  <button className="bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition mt-4">
-                    View Details
-                  </button>
-                </div>
-
-                {/* Desktop Layout */}
-                <div className="hidden md:flex justify-center">
+                {/* Booking Details */}
+                <div className="flex justify-center mb-2 md:mb-0">
                   <img src={booking.logo} alt="Boat Logo" className="h-12 w-12 rounded-full" />
                 </div>
-                <div className="hidden md:block text-center">
+                <div className="text-center md:text-left mb-2 md:mb-0">
                   <h3 className="font-semibold text-gray-700">{booking.tourName}</h3>
                 </div>
+                {/* Conditionally render these on mobile */}
+                <div className="text-center md:hidden">
+                  <p className="text-gray-600">{booking.departureDate}</p>
+                </div>
+                <div className="text-center md:hidden">
+                  <p className="text-gray-600">{booking.customerName}</p>
+                </div>
+
+                {/* Desktop view columns */}
                 <div className="hidden md:block text-center">
                   <p className="text-gray-600">{booking.customerName}</p>
                 </div>
@@ -137,8 +125,10 @@ const Bookings = () => {
                 <div className="hidden md:block text-center">
                   <p className={`font-semibold ${booking.status === 'Confirmed' ? 'text-green-600' : booking.status === 'Cancelled' ? 'text-red-600' : 'text-yellow-600'}`}>{booking.status}</p>
                 </div>
-                <div className="hidden md:flex justify-center">
-                  <button className="bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">
+
+                {/* View Details Button */}
+                <div className="ml-4 flex justify-center md:justify-end">
+                  <button className="bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition whitespace-nowrap">
                     View Details
                   </button>
                 </div>
