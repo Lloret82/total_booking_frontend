@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import DraggableBooking from '../components/DraggableBooking';
 import DroppableBoat from '../components/DroppableBoat';
 import dummyBookings from '../data/dummyBookings.json';
 import dummyBoats from '../data/dummyBoats.json';
-
 
 const Assignment = () => {
   const [bookings, setBookings] = useState([]);
@@ -75,6 +76,30 @@ const Assignment = () => {
     }
   };
 
+  const handleGeneratePDFs = async () => {
+    const currentDate = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    for (const boat of boats) {
+      if (boat.assignedBookings.length > 0) {
+        const doc = new jsPDF();
+        doc.text(`Boat: ${boat.name}`, 10, 10);
+        doc.autoTable({
+          head: [['Tour Name', 'Customer', 'Date']],
+          body: boat.assignedBookings.map((booking) => [
+            booking.tourName,
+            booking.customerName,
+            booking.departureDate,
+          ]),
+        });
+  
+        const fileName = `${boat.name} - ${currentDate}.pdf`;
+        await new Promise((resolve) => {
+          doc.save(fileName);
+          setTimeout(resolve, 500);
+        });
+      }
+    }
+  };
+
   const filteredBookings = bookings.filter((booking) => {
     if (!filterDate) return !booking.isAssigned;
     return booking.departureDate === filterDate && !booking.isAssigned;
@@ -113,10 +138,18 @@ const Assignment = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <DroppableBookings />
-        <div className="grid grid-cols-1 gap-4">
-          {boats.map((boat) => (
-            <DroppableBoat key={boat.id} boat={boat} onDropBooking={handleDropBooking} />
-          ))}
+        <div className="relative">
+          <button
+            onClick={handleGeneratePDFs}
+            className="absolute top-0 right-0 bg-indigo-800 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition"
+          >
+            Generate Documentation
+          </button>
+          <div className="grid grid-cols-1 gap-4 mt-12">
+            {boats.map((boat) => (
+              <DroppableBoat key={boat.id} boat={boat} onDropBooking={handleDropBooking} />
+            ))}
+          </div>
         </div>
       </div>
     </DndProvider>

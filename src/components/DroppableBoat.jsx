@@ -14,24 +14,28 @@ const DroppableBoat = ({ boat, onDropBooking }) => {
   return (
     <div
       ref={drop}
-      className={`bg-customDarkBlue text-white p-4 rounded-lg shadow-md hover:shadow-lg transition-all mb-6 ${isOver ? 'bg-blue-300' : ''}`}
+      className={`bg-customDarkBlue text-white p-4 rounded shadow-md hover:shadow-lg transition-all ${
+        isOver ? 'bg-blue-200' : ''
+      }`}
     >
-      <div className="flex items-center mb-4">
-        <img src={boat.logo || "./assets/boat.jpg.webp"} alt="Boat Logo" className="h-12 w-12 rounded-full mr-4" />
-        <h2 className="text-xl font-bold">{boat.name}</h2>
-      </div>
-      <p className="text-sm">Type: {boat.type}</p>
-      <p className="text-sm">Capacity: {boat.capacity}</p>
-      <p className="text-sm">Location: {boat.location}</p>
-      <h3 className="font-bold mt-4">Assigned Bookings:</h3>
-      <div className="mt-2">
-        {boat.assignedBookings.length === 0 ? (
-          <p className="italic text-sm">No bookings assigned.</p>
-        ) : (
-          boat.assignedBookings.map((booking) => (
+      <div className="flex items-start">
+        {/* Add the image on the left */}
+        <img
+          src={boat.logo || "./assets/boat.jpg.webp"}
+          alt="Boat Logo"
+          className="h-12 w-12 rounded-full mr-4"
+        />
+        <div className="flex-1">
+          <h2 className="text-xl font-bold">{boat.name}</h2>
+          <p className="text-sm">{boat.type}</p>
+          <p className="text-sm">Capacity: {boat.capacity}</p>
+          <p className="text-sm">Location: {boat.location}</p>
+        </div>
+        <div className="grid grid-cols-2 gap-2 ml-4">
+          {boat.assignedBookings.map((booking) => (
             <DraggableBooking key={booking.id} booking={booking} isAssigned={true} sourceBoatId={boat.id} />
-          ))
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
