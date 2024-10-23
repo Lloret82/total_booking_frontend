@@ -31,11 +31,18 @@ const DroppableBoat = ({ boat, onDropBooking }) => {
           <p className="text-sm">Capacity: {boat.capacity}</p>
           <p className="text-sm">Location: {boat.location}</p>
         </div>
-        <div className="grid grid-cols-2 gap-2 ml-4">
+        {/* Ensure two-column layout for desktop and adjust to a single column only on mobile */}
+        <div className="grid grid-cols-2 gap-2 ml-4 hidden sm:grid">
           {boat.assignedBookings.map((booking) => (
             <DraggableBooking key={booking.id} booking={booking} isAssigned={true} sourceBoatId={boat.id} />
           ))}
         </div>
+      </div>
+      {/* Fallback to a single-column grid for mobile only */}
+      <div className="grid grid-cols-1 gap-2 mt-4 sm:hidden">
+        {boat.assignedBookings.map((booking) => (
+          <DraggableBooking key={booking.id} booking={booking} isAssigned={true} sourceBoatId={boat.id} />
+        ))}
       </div>
     </div>
   );

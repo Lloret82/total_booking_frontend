@@ -136,7 +136,7 @@ const Assignment = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="container mx-auto p-6 grid grid-cols-2 gap-6">
         <DroppableBookings />
         <div className="relative">
           <button
